@@ -19,6 +19,7 @@ function Laser(dspos, angle) {
 		var d = dist(this.pos.x, this.pos.y, enemy.pos.x, enemy.pos.y);
 		if (d < enemy.r) {
 			return true;
+			return incrementScore;
 		} else {
 			return false;
 		}

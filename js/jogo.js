@@ -1,7 +1,16 @@
 var dstar;
 var enemies = [];
 var lasers = [];
-
+var gameover;
+var space;
+var score=0;
+function preload(){
+    //space=loadImage("sprites/space.png");
+    //gameover=loadImage("sprites/gameover.jpg");
+}
+function incrementScore(){
+    score++;
+}
 function setup() {
     createCanvas(windowWidth, windowHeight);
     dstar = new Dstar();
@@ -10,12 +19,16 @@ function setup() {
     }
 }
 
+
 function draw() {
     background(0);  
+    //image(space,0,0);
 
     for (var i = 0; i < enemies.length; i++) {
         if (dstar.hits(enemies[i])) {
-            console.log('ooops!')
+            alert("GAME OVER");
+            document.location.reload();
+            
         }
         enemies[i].render();
         enemies[i].update();
@@ -45,6 +58,8 @@ function draw() {
     dstar.edges();
 
 }
+
+
 
 function keyReleased() {
     dstar.setRotation(0);
