@@ -5,8 +5,8 @@ var gameover;
 var space;
 var score=0;
 function preload(){
-    //space=loadImage("sprites/space.png");
-    //gameover=loadImage("sprites/gameover.jpg");
+    space=loadImage("sprites/space.png");
+    gameover=loadImage("sprites/dead.png");
 }
 function incrementScore(){
     score++;
@@ -21,11 +21,12 @@ function setup() {
 
 
 function draw() {
-    background(0);  
-    //image(space,0,0);
+    background(space);  
+    
 
     for (var i = 0; i < enemies.length; i++) {
         if (dstar.hits(enemies[i])) {
+            image(gameover,0,0);
             alert("GAME OVER");
             document.location.reload();
             
