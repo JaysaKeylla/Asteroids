@@ -4,12 +4,16 @@ var lasers = [];
 var gameover;
 var space;
 var score=0;
+var font;
+var boom;
+var life=3;
+
 function preload(){
     space=loadImage("sprites/space.png");
     gameover=loadImage("sprites/dead.png");
-}
-function incrementScore(){
-    score++;
+    font=loadFont("sprites/font.ttf");
+    boom=loadSound("sprites/boom.mp3");
+
 }
 function setup() {
     createCanvas(windowWidth, windowHeight);
@@ -24,11 +28,12 @@ function draw() {
     background(space);  
     
 
-    for (var i = 0; i < enemies.length; i++) {
+   for (var i = 0; i < enemies.length; i++) {
         if (dstar.hits(enemies[i])) {
-            image(gameover,0,0);
-            alert("GAME OVER");
-            document.location.reload();
+            life=life-1;
+            //image(gameover,0,0);
+            //alert("GAME OVER");
+            //document.location.reload();
             
         }
         enemies[i].render();
@@ -36,14 +41,18 @@ function draw() {
         enemies[i].edges();
     }
 
+
     for (var i = lasers.length - 1; i >= 0; i--) {
         lasers[i].render();
         lasers[i].update();
         for (var j = enemies.length - 1; j >= 0; j--) {
             if (lasers[i].hits(enemies[j])) {
                 if(enemies[j].r > 10) {
+                    boom.play(); //efeito sonoro quando o asteroide é destruído 
                     var newEnemies = enemies[j].breakup();
                     enemies = enemies.concat(newEnemies);
+                    score=score+100; //add score ETAPA 05
+                    
                 }
                 enemies.splice(j, 1); 
                 lasers.splice(i, 1);
@@ -57,7 +66,11 @@ function draw() {
     dstar.turn();
     dstar.update();
     dstar.edges();
-
+    textFont(font);
+    textSize(25); 
+    fill(255); 
+    text("Score: " +score , 300, 30);
+    text("Life: "+life, 900, 30);
 }
 
 

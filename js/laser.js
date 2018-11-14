@@ -1,4 +1,5 @@
 // ETAPA 4 - DISPAROS DO JOGADOR
+var score=0;
 function Laser(dspos, angle) {
 	this.pos = createVector(dspos.x, dspos.y);
 	this.vel = p5.Vector.fromAngle(angle);
@@ -19,7 +20,7 @@ function Laser(dspos, angle) {
 		var d = dist(this.pos.x, this.pos.y, enemy.pos.x, enemy.pos.y);
 		if (d < enemy.r) {
 			return true;
-			return incrementScore;
+			score++;
 		} else {
 			return false;
 		}

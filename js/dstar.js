@@ -37,7 +37,8 @@ function Dstar() {
         push();
         translate(this.pos.x, this.pos.y);
         rotate(this.heading + PI / 2);
-        fill(75);
+        fill(25);
+        stroke(100);
         triangle(-this.r, this.r, this.r, this.r, 0, -this.r);
         pop();
     }
