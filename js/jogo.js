@@ -3,7 +3,7 @@ var enemies = [];
 var lasers = [];
 var gameover;
 var space;
-var score=0;
+var score=00000;
 var font;
 var boom;
 var life=3;
@@ -30,11 +30,14 @@ function draw() {
 
    for (var i = 0; i < enemies.length; i++) {
         if (dstar.hits(enemies[i])) {
-            life=life-1;
-            //image(gameover,0,0);
-            //alert("GAME OVER");
-            //document.location.reload();
-            
+            life=life-1; //etapa 06
+            if(life<0){
+                textFont(font); //etapa 05
+                textSize(200); 
+                fill(200); 
+                text("YOU ARE DEAD",200,300);
+                document.location.reload();
+            }
         }
         enemies[i].render();
         enemies[i].update();
@@ -51,7 +54,7 @@ function draw() {
                     boom.play(); //efeito sonoro quando o asteroide é destruído 
                     var newEnemies = enemies[j].breakup();
                     enemies = enemies.concat(newEnemies);
-                    score=score+100; //add score ETAPA 05
+                    score=score+100; //contagem de score ETAPA 06
                     
                 }
                 enemies.splice(j, 1); 
@@ -66,11 +69,11 @@ function draw() {
     dstar.turn();
     dstar.update();
     dstar.edges();
-    textFont(font);
-    textSize(25); 
+    textFont(font); //etapa 05
+    textSize(20); 
     fill(255); 
-    text("Score: " +score , 300, 30);
-    text("Life: "+life, 900, 30);
+    text("Score: " +score , 300, 30); //add score
+    text("Life: "+life, 900, 30); //add life
 }
 
 
