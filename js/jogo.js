@@ -7,6 +7,7 @@ var score=0;
 var font;
 var boom;
 var life=3;
+var sequenceAnimation
 
 function preload(){
     space=loadImage("sprites/space.png");
@@ -14,6 +15,7 @@ function preload(){
     font=loadFont("sprites/font.ttf");
     boom=loadSound("sprites/boom.mp3");
     shot=loadSound("sprites/shot.mp3");
+    sequenceAnimation = loadAnimation("sprites/explosion.png", "sprites/explosion2.png");
 
 }
 function setup() {
@@ -33,7 +35,7 @@ function draw() {
     //text("START",100,400);
     //textSize(30); 
     //fill(255); 
-    //text("Navegue em uma missão da Frota Instelar na nave Dstar"+"\n"+"Press ENTER to start",800,700); 
+    //text("A Frota Instelar tem uma missão para você e sua equipe, destrua os asteroids que ameassam a terra com a sua nave Dstar"+"\n"+"Press ENTER to start",800,700); 
                     
 
    for (var i = 0; i < enemies.length; i++) {
@@ -57,18 +59,20 @@ function draw() {
 
 
     for (var i = lasers.length - 1; i >= 0; i--) {
-        shot.play();
+        //shot.play();
         lasers[i].render();
         lasers[i].update();
         for (var j = enemies.length - 1; j >= 0; j--) {
             if (lasers[i].hits(enemies[j])) {
                 if(enemies[j].r > 10) {
                     boom.play(); //efeito sonoro quando o asteroide é destruído 
+                    //animation(sequenceAnimation, j, 1);
                     var newEnemies = enemies[j].breakup();
                     enemies = enemies.concat(newEnemies);
                     score=score+100; //contagem de score ETAPA 06
                     
                 }
+
                 enemies.splice(j, 1); 
                 lasers.splice(i, 1);
                 break;
