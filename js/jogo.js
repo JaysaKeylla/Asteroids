@@ -59,7 +59,6 @@ function draw() {
 
 
     for (var i = lasers.length - 1; i >= 0; i--) {
-        //shot.play();
         lasers[i].render();
         lasers[i].update();
         for (var j = enemies.length - 1; j >= 0; j--) {
@@ -97,12 +96,16 @@ function draw() {
 function keyReleased() {
     dstar.setRotation(0);
     dstar.boosting(false);
+    if (!shot.isPlaying()){
+        shot.stop();
+    }
 }
 
 // ETAPA 2 - MOVIMENTAÇÃO DO JOGADOR
 function keyPressed() {
     if (key == ' ') {
         lasers.push(new Laser(dstar.pos, dstar.heading));
+        shot.play();
     } else if (keyCode == RIGHT_ARROW) {
         dstar.setRotation(0.1);
     } else if (keyCode == LEFT_ARROW) {
