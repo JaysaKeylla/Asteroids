@@ -3,7 +3,7 @@ var enemies = [];
 var lasers = [];
 var gameover;
 var space;
-var score=00000;
+var score=0;
 var font;
 var boom;
 var life=3;
@@ -13,10 +13,11 @@ function preload(){
     gameover=loadImage("sprites/dead.png");
     font=loadFont("sprites/font.ttf");
     boom=loadSound("sprites/boom.mp3");
+    shot=loadSound("sprites/shot.mp3");
 
 }
 function setup() {
-    createCanvas(windowWidth, windowHeight);
+    createCanvas(windowWidth-10, windowHeight-8);
     dstar = new Dstar();
     for (var i = 0; i < 5; i++) {
         enemies.push(new Enemy());
@@ -26,19 +27,29 @@ function setup() {
 
 function draw() {
     background(space);  
-    
+    //textFont(font); 
+    //textSize(500); 
+    //fill(255); 
+    //text("START",100,400);
+    //textSize(30); 
+    //fill(255); 
+    //text("Navegue em uma missão da Frota Instelar na nave Dstar"+"\n"+"Press ENTER to start",800,700); 
+                    
 
    for (var i = 0; i < enemies.length; i++) {
         if (dstar.hits(enemies[i])) {
-            life=life-1; //etapa 06
-            if(life<0){
-                textFont(font); //etapa 05
-                textSize(200); 
-                fill(200); 
-                text("YOU ARE DEAD",200,300);
-                document.location.reload();
+            
+                textFont(font); 
+                textSize(250); 
+                fill(200, 0, 0); 
+                text("YOU"+"\n"+"ARE"+"\n"+"DEAD",500,200);
+                textSize(30); 
+                fill(255); 
+                text("Press X to play again",500,900); 
+                    
             }
-        }
+            
+    
         enemies[i].render();
         enemies[i].update();
         enemies[i].edges();
@@ -46,6 +57,7 @@ function draw() {
 
 
     for (var i = lasers.length - 1; i >= 0; i--) {
+        shot.play();
         lasers[i].render();
         lasers[i].update();
         for (var j = enemies.length - 1; j >= 0; j--) {
@@ -73,7 +85,7 @@ function draw() {
     textSize(20); 
     fill(255); 
     text("Score: " +score , 300, 30); //add score
-    text("Life: "+life, 900, 30); //add life
+    //text("Life: "+life, 900, 30); //add life
 }
 
 
@@ -93,5 +105,7 @@ function keyPressed() {
         dstar.setRotation(-0.1);
     } else if (keyCode == UP_ARROW) {
         dstar.boosting(true);
+    } else if (keyCode == BACKSPACE){
+        document.location.reload();
     }
 }
