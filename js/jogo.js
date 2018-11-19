@@ -29,13 +29,14 @@ function setup() {
 
 function draw() {
     background(space);  
-    //textFont(font); 
-    //textSize(500); 
-    //fill(255); 
-    //text("START",100,400);
-    //textSize(30); 
-    //fill(255); 
-    //text("A Frota Instelar tem uma missão para você e sua equipe, destrua os asteroids que ameassam a terra com a sua nave Dstar"+"\n"+"Press ENTER to start",800,700); 
+    textFont(font); 
+    textSize(500); 
+    fill(255); 
+    text("START",100,400);
+    textSize(30); 
+    fill(255); 
+    text("A Frota Instelar tem uma missão para você e sua equipe, destrua os asteroids que ameassam a terra com a sua nave Dstar",20,700); 
+    text("Press ENTER to start",800,800);
                     
 
    for (var i = 0; i < enemies.length; i++) {
