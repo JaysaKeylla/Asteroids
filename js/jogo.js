@@ -11,6 +11,10 @@ var bonus  = [];
 var bonuss;
 var firing;
 var boost;
+var fase=150;
+var level=1;
+
+
 
 function preload(){
     space=loadImage("sprites/space.png");
@@ -28,7 +32,7 @@ function setup() {
     dstar = new Dstar();
     for (var i = 0; i < 5; i++) {
         enemies.push(new Enemy());
-       
+        bonus.push(new Bonus());
     }
 }
 
@@ -68,7 +72,7 @@ function draw() {
 for (var k = 0; k < bonus.length; k++) {
         if (dstar.hits(bonus[k])) {
             score=score+5000; // se a nave bate no asteroide ganha 5000 pontos 
-            dstar.render(width/2, height/2);
+           
 
                   
             }
@@ -102,9 +106,12 @@ for (var k = 0; k < bonus.length; k++) {
    }
   
 
-   for (var i=score%5000; i=0; i--){ //ETAPA 8, a cada 5000 pontos ganhos aparecem asteroides bonus
-     bonus.push(new Bonus());
-     firing.play();
+//if(score%fase=0){ //ETAPA 8, a cada 5000 pontos ganhos aparecem asteroides bonus
+ //     bonus.push(new Bonus());
+ //  firing.play(); 
+ //  level++;
+
+
     for (var t = lasers.length - 1; t >= 0; t--) {
         lasers[t].render();
         lasers[t].update();
@@ -121,10 +128,10 @@ for (var k = 0; k < bonus.length; k++) {
                 lasers.splice(t, 1);
                 break;
                 
+                }
             }
         }
-   }
-   }
+  //}
 
     dstar.render();
     dstar.turn();
@@ -134,7 +141,8 @@ for (var k = 0; k < bonus.length; k++) {
     textSize(20); 
     fill(255); 
     text("Score: " +score , 300, 30); //add score
-    text("Life: "+life, 900, 30); //add life
+    text("Life: "+life, 600, 30); //add life
+    text("Level: "+level, 900,30); // add phase
 
 }
 
@@ -145,12 +153,6 @@ function keyReleased() {
     dstar.boosting(false);
     if (!shot.isPlaying()){
         shot.stop();
-    }
-    if (!firing.isPlaying()){
-        firing.stop();
-    }
-    if (!boost.isPlaying()){
-        boost.stop();
     }
 }
 
@@ -165,8 +167,9 @@ function keyPressed() {
         dstar.setRotation(-0.1);
     } else if (keyCode == UP_ARROW) {
         dstar.boosting(true);
-        boost.play(0.1);
-    } else if (keyCode == BACKSPACE){
-        document.location.reload();
+        boost.play(0.001);
+    } else if (!keyCode == UP_ARROW){
+       boost.stop();
     }
 }
+
