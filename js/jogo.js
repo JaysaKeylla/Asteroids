@@ -33,7 +33,7 @@ function setup() {
     dstar = new Dstar();
     for (var i = 0; i < 5; i++) {
         enemies.push(new Enemy());
-        //bonus.push(new Bonus());
+  
     }
     setInterval(newAsteroids, time);
 }
@@ -70,23 +70,13 @@ function draw() {
             bonus.push(new Bonus());
             firing.play();
 
-            // Fica mais dificil a poha toda
+            // ETAPA 08 ADIÇÃO DE ETAPAS, as etapas são infinitas, quando vcchega num multiplo de 500 nos pontos vc passa de fase;
             level++;
             multiplicador++;
         }
 
-        // textFont(font);
-        //  textSize(500);
-        // // // // // //  fill(255);
-        // // // // //  text("START",100,400);
-        // // // //  textSize(30);
-        // // //  fill(255);
-        // //  text("A Frota Instelar tem uma missão para você e sua equipe, destrua os asteroids que ameassam a terra com a sua nave Dstar",20,700);
-        //  text("Press ENTER to start",800,800);
-
         for (var i = 0; i < enemies.length; i++) {
             if (dstar.hits(enemies[i])) {
-                // Morrer aqui
 
                 // // // // // // //  textFont(font);
                 // // // // // //   textSize(250);
@@ -95,7 +85,7 @@ function draw() {
                 // // // //    textSize(30);
                 //    fill(255);
                 // //   text("Press X to play again",500,900);
-                life--;
+               
             }
 
             enemies[i].render();
@@ -103,7 +93,7 @@ function draw() {
             enemies[i].edges();
         }
 
-        for (var k = 0; k < bonus.length; k++) {
+        for (var k = 0; k < bonus.length; k++) { //ETAPA 07 quando se passa de fase aparecem asteroids especiais que valem mais pontos
             if (dstar.hits(bonus[k])) {
                 score = score + 5000; // se a nave bate no asteroide ganha 5000 pontos
             }
@@ -132,10 +122,7 @@ function draw() {
             }
         }
 
-        //ETAPA 8, a cada 5000 pontos ganhos aparecem asteroides bonus
-        //     bonus.push(new Bonus());
-        //  firing.play();
-        //  level++;
+        
 
         for (var t = lasers.length - 1; t >= 0; t--) {
             lasers[t].render();
@@ -163,7 +150,7 @@ function draw() {
         fill(255);
         text("Score: " + score, 300, 30); //add score
         text("Life: " + life, 600, 30); //add life
-        text("Level: " + level, 900, 30); // add phase
+        text("Level: " + level, 900, 30); // add etapa
     }
 }
 
