@@ -16,16 +16,19 @@ var level = 1;
 var screen = 0;
 var time = 60000;
 var multiplicador = 1;
+var dead;
 
 function preload() {
     space = loadImage("sprites/space.png");
-    gameover = loadImage("sprites/dead.png");
+    gameover = loadImage("sprites/gameover.png");
     font = loadFont("sprites/font.ttf");
     boom = loadSound("sprites/boom.mp3");
     shot = loadSound("sprites/shot.mp3");
     bonuss = loadSound("sprites/bonus.mp3");
     firing = loadSound("sprites/imfiringmylaser.mp3");
     boost = loadSound("sprites/boost.mp3");
+    dead = loadSound("sprites/dead.mp3");
+
 }
 
 function setup() {
@@ -77,7 +80,8 @@ function draw() {
 
         for (var i = 0; i < enemies.length; i++) {
             if (dstar.hits(enemies[i])) {
-
+                //image(gameover, 0,0);
+                //dead.play();
                 // // // // // // //  textFont(font);
                 // // // // // //   textSize(250);
                 // // // // //   fill(200, 0, 0);
@@ -108,7 +112,7 @@ function draw() {
             lasers[i].update();
             for (var j = enemies.length - 1; j >= 0; j--) {
                 if (lasers[i].hits(enemies[j])) {
-                    if (enemies[j].r > 10) {
+                    if (enemies[j].r > 30) {
                         boom.play(); //efeito sonoro quando o asteroide é destruído
                         var newEnemies = enemies[j].breakup();
                         enemies = enemies.concat(newEnemies);
@@ -149,7 +153,6 @@ function draw() {
         textSize(20);
         fill(255);
         text("Score: " + score, 300, 30); //add score
-        text("Life: " + life, 600, 30); //add life
         text("Level: " + level, 900, 30); // add etapa
     }
 }
@@ -159,6 +162,8 @@ function keyReleased() {
     dstar.boosting(false);
     if (!shot.isPlaying()) {
         shot.stop();
+    }if(!dead.isPlaying()) {
+        dead.stop();
     }
 }
 
