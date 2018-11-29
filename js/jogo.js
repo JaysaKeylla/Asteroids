@@ -11,8 +11,7 @@ var bonus = [];
 var bonuss;
 var firing;
 var boost;
-var fase = 150;
-var level = 1;
+var level = 1; //ETAPA 09: Mudança de telas
 var screen = 0;
 var time = 60000;
 var multiplicador = 1;
@@ -53,42 +52,34 @@ function newAsteroids() {
 
 function draw() {
     background(space);
-    if (screen == 0) {
+    if (screen == 0) { //Tela de start
         textFont(font);
-        textSize(500);
+        textSize(250);
         fill(255);
-        text("START", 100, 400);
-        textSize(30);
+        text("START", (windowWidth - 10)/5, (windowHeight - 8)/2);
+        textSize(20);
         fill(255);
-        text(
-            "A Frota Instelar tem uma missão para você e sua equipe, destrua os asteroids que ameassam a terra com a sua nave Dstar",
-            20,
-            700
-        );
-        text("Press ENTER to start", 800, 800);
+        text("A Frota Instelar tem uma missão para você e sua equipe, destrua os asteroids que ameassam a terra com a sua nave Dstar",(windowWidth - 10)/12, (windowHeight - 8)/1.5);
+        textSize(20);
+        fill(255);
+        text("Press ENTER to start", (windowWidth - 10)/12, (windowHeight - 8)/1.25);
     }
 
-    if (screen == 1) {
-        if (score > level * 500) {
+    if (screen == 1) { //Tela do jogo
+        if (score > level * 2500) {
             bonus.push(new Bonus());
             firing.play();
 
-            // ETAPA 08 ADIÇÃO DE ETAPAS, as etapas são infinitas, quando vcchega num multiplo de 500 nos pontos vc passa de fase;
+            // ETAPA 08 ADIÇÃO DE ETAPAS, as etapas são infinitas, quando vcchega num multiplo de 2500 nos pontos vc passa de fase;
             level++;
             multiplicador++;
         }
 
         for (var i = 0; i < enemies.length; i++) {
             if (dstar.hits(enemies[i])) {
-                //image(gameover, 0,0);
-                //dead.play();
-                // // // // // // //  textFont(font);
-                // // // // // //   textSize(250);
-                // // // // //   fill(200, 0, 0);
-                // // // //    text("YOU"+"\n"+"ARE"+"\n"+"DEAD",500,200);
-                // // // //    textSize(30);
-                //    fill(255);
-                // //   text("Press X to play again",500,900);
+               dead.play();
+               screen=2;
+                
                
             }
 
@@ -113,11 +104,6 @@ function draw() {
             for (var j = enemies.length - 1; j >= 0; j--) {
                 if (lasers[i].hits(enemies[j])) {
                     if (enemies[j].r > 20) {
-                        boom.play(); //efeito sonoro quando o asteroide é destruído
-                        var newEnemies = enemies[j].breakup();
-                        enemies = enemies.concat(newEnemies);
-                        score = score + 100; //contagem de score ETAPA 06 o asteroide comum vale 100 pontos
-                    }if (enemies[j].r > 15) {
                         boom.play(); //efeito sonoro quando o asteroide é destruído
                         var newEnemies = enemies[j].breakup();
                         enemies = enemies.concat(newEnemies);
@@ -159,6 +145,23 @@ function draw() {
         fill(255);
         text("Score: " + score, 300, 30); //add score
         text("Level: " + level, 900, 30); // add etapa
+        if(score==500000000){
+           textFont(font);
+            textSize(250);
+            fill(200, 0, 0);
+            text("GET A LIFE",500,200); 
+        }
+    }
+    if (screen==2){ // Tela de game over
+    //image(gameover, 0,0);
+                
+    textFont(font);
+    textSize(250);
+    fill(200, 0, 0);
+    text("YOU"+"\n"+"ARE"+"\n"+"DEAD",500,200);
+                // // // //    textSize(30);
+                //    fill(255);
+                // //   text("Press X to play again",500,900);
     }
 }
 
@@ -187,6 +190,8 @@ function keyPressed() {
     } else if (!keyCode == UP_ARROW) {
         boost.stop();
     } else if (keyCode == ENTER) {
-        screen = 1;
+        screen=1;
+    } else if (keyCode == BACKSPACE){
+        screen=0;
     }
 }
