@@ -99,7 +99,7 @@ function draw() {
 
         for (var k = 0; k < bonus.length; k++) { //ETAPA 07 quando se passa de fase aparecem asteroids especiais que valem mais pontos
             if (dstar.hits(bonus[k])) {
-                score = score + 5000; // se a nave bate no asteroide ganha 5000 pontos
+                score = score + 2000; // se a nave bate no asteroide ganha 2000 pontos
             }
 
             bonus[k].render();
@@ -112,7 +112,12 @@ function draw() {
             lasers[i].update();
             for (var j = enemies.length - 1; j >= 0; j--) {
                 if (lasers[i].hits(enemies[j])) {
-                    if (enemies[j].r > 30) {
+                    if (enemies[j].r > 20) {
+                        boom.play(); //efeito sonoro quando o asteroide é destruído
+                        var newEnemies = enemies[j].breakup();
+                        enemies = enemies.concat(newEnemies);
+                        score = score + 100; //contagem de score ETAPA 06 o asteroide comum vale 100 pontos
+                    }if (enemies[j].r > 15) {
                         boom.play(); //efeito sonoro quando o asteroide é destruído
                         var newEnemies = enemies[j].breakup();
                         enemies = enemies.concat(newEnemies);
@@ -133,10 +138,10 @@ function draw() {
             lasers[t].update();
             for (var k = bonus.length - 1; k >= 0; k--) {
                 if (lasers[t].hits(bonus[k])) {
-                    if (bonus[k].r > 10) {
+                    
                         bonuss.play(); //efeito sonoro quando o asteroide bonus é destruído
                         score = score + 1000; //o asteroide bonus vale 1000 pontos
-                    }
+                    
 
                     bonus.splice(k, 1);
                     lasers.splice(t, 1);
