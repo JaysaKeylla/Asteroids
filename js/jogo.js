@@ -11,8 +11,8 @@ var bonus = [];
 var bonuss;
 var firing;
 var boost;
-var level = 1; //ETAPA 09: Mudança de telas
-var screen = 0;
+var level = 1;  
+var screen = 0; //ETAPA 09: Mudança de telas
 var time = 60000;
 var multiplicador = 1;
 var dead;
