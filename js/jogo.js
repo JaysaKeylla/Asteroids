@@ -11,7 +11,7 @@ var bonus = [];
 var hitbonus;
 var levelsound;
 var boost;
-var level = 1;  
+var level = 1;
 var screen = 0; //ETAPA 09: Mudança de telas
 var time = 60000;
 var multiplicador = 1;
@@ -38,7 +38,6 @@ function setup() {
     dstar = new Dstar();
     for (var i = 0; i < 5; i++) {
         enemies.push(new Enemy());
-  
     }
     setInterval(newAsteroids, time);
 }
@@ -55,24 +54,24 @@ function newAsteroids() {
 
 function draw() {
     background(space);
-    console.log('in loop',screen)
+    console.log('in loop', screen)
     if (screen == 0) { //Tela de start
         textFont(font);
         textSize(250);
         fill(255);
-        text("START", (windowWidth - 10)/5, (windowHeight - 8)/2);
+        text("START", (windowWidth - 10) / 5, (windowHeight - 8) / 2);
         textSize(20);
         fill(255);
-        text("A Frota Instelar tem uma missão para você e sua equipe, destrua os asteroids que ameassam a terra com a sua nave Dstar",(windowWidth - 10)/12, (windowHeight - 8)/1.5);
+        text("A Frota Instelar tem uma missão para você e sua equipe, destrua os asteroids que ameassam a terra com a sua nave Dstar", (windowWidth - 10) / 12, (windowHeight - 8) / 1.5);
         textSize(20);
         fill(255);
-        text("Press ENTER to start", (windowWidth - 10)/12, (windowHeight - 8)/1.25);
+        text("Press ENTER to start", (windowWidth - 10) / 12, (windowHeight - 8) / 1.25);
     }
 
     if (screen == 1) { //Tela do jogo
-       // enter.play();
-       
-       if (score > level * 2500) {
+        // enter.play();
+        //    dstar = new Dstar();
+        if (score > level * 2500) {
             bonus.push(new Bonus());
             // levelsound.play();
 
@@ -83,10 +82,10 @@ function draw() {
 
         for (var i = 0; i < enemies.length; i++) {
             if (dstar.hits(enemies[i])) {
-            //    hitasteroid.play();
-               screen=2;
-                
-               
+                //    hitasteroid.play();
+                screen = 2;
+
+
             }
 
             enemies[i].render();
@@ -124,17 +123,17 @@ function draw() {
             }
         }
 
-        
+
 
         for (var t = lasers.length - 1; t >= 0; t--) {
             lasers[t].render();
             lasers[t].update();
             for (var k = bonus.length - 1; k >= 0; k--) {
                 if (lasers[t].hits(bonus[k])) {
-                    
-                        // hitbonus.play(); //efeito sonoro quando o asteroide bonus é destruído    
-                        score = score + 1000; //o asteroide bonus vale 1000 pontos
-                    
+
+                    // hitbonus.play(); //efeito sonoro quando o asteroide bonus é destruído    
+                    score = score + 1000; //o asteroide bonus vale 1000 pontos
+
 
                     bonus.splice(k, 1);
                     lasers.splice(t, 1);
@@ -147,20 +146,21 @@ function draw() {
         dstar.turn();
         dstar.update();
         dstar.edges();
+
         textFont(font); //etapa 05
         textSize(20);
         fill(255);
         text("Score: " + score, 300, 30); //add score
         text("Level: " + level, 900, 30); // add etapa
-        if(score==500000000){
-           textFont(font);
+        if (score == 500000000) {
+            textFont(font);
             textSize(250);
             fill(200, 0, 0);
-            text("GET A LIFE",500,200); 
+            text("GET A LIFE", 500, 200);
         }
     }
-    if (screen==2){ // Tela de game over
-    background(gameover);            
+    if (screen == 2) { // Tela de game over
+        background(gameover);
     }
 }
 
@@ -187,14 +187,17 @@ function keyPressed() {
         boost.play();
     } else if (!keyCode == UP_ARROW) {
         boost.stop();
-    } if(screen==0){
-        else if (keyCode == ENTER) {
-        console.log(screen)
-        screen=1;
-        dstar = new Dstar();
-        enemies.push(new Enemy());
+    } else if (keyCode == ENTER) {
+        console.log(enemies.length);
+        if (enemies == [] ||enemies ==0 ) {
+            for (var i = 0; i < 5; i++) {
+                enemies.push(new Enemy());
+            }
         }
-    } else if (keyCode == BACKSPACE){
-        screen=0;
-    }
+        console.log(screen)
+        screen = 1;
+    } else if (keyCode == BACKSPACE) {
+        enemies = [];
+        screen = 0;
+    } 
 }
