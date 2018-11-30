@@ -17,7 +17,7 @@ var time = 60000;
 var multiplicador = 1;
 var hitasteroid;
 var enter;
-
+var booster;
 
 function preload() {
     space = loadImage("sprites/space.png");
@@ -30,6 +30,7 @@ function preload() {
     boost = loadSound("sprites/boost.mp3");
     hitasteroid = loadSound("sprites/hitasteroid.mp3");
     enter = loadSound("sprites/enter.mp3");
+    booster = loadSound("sprites/booster.png");
 
 }
 
@@ -81,7 +82,7 @@ function draw() {
 
         for (var i = 0; i < enemies.length; i++) {
             if (dstar.hits(enemies[i])) {
-               hitasteroid.play();
+              // hitasteroid.play();
                screen=2;
                 
                
@@ -130,7 +131,7 @@ function draw() {
             for (var k = bonus.length - 1; k >= 0; k--) {
                 if (lasers[t].hits(bonus[k])) {
                     
-                        hitbonus.play(); //efeito sonoro quando o asteroide bonus é destruído
+                        //hitbonus.play(); //efeito sonoro quando o asteroide bonus é destruído
                         score = score + 1000; //o asteroide bonus vale 1000 pontos
                     
 
