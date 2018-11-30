@@ -1,3 +1,4 @@
+
 function Dstar() {
     this.pos = createVector(width/2, height/2);
     this.r = 20;
@@ -34,13 +35,24 @@ function Dstar() {
     }
     // ETAPA 1 - DESENHAR JOGADOR
     this.render = function() {
-        push();
-        translate(this.pos.x, this.pos.y);
-        rotate(this.heading + PI / 2);
-        fill(25);
-        stroke(100);
-        triangle(-this.r, this.r, this.r, this.r, 0, -this.r);
-        pop();
+        if(this.isBoosting) {
+            push();
+            translate(this.pos.x, this.pos.y);
+            rotate(this.heading + PI / 2);
+            fill(25);
+            stroke(255, 0, 255);
+            triangle(-this.r, this.r, this.r, this.r, 0, -this.r);
+            booster(img,this)
+            pop();
+        } else {
+            push();
+            translate(this.pos.x, this.pos.y);
+            rotate(this.heading + PI / 2);
+            fill(25);
+            stroke(100);
+            triangle(-this.r, this.r, this.r, this.r, 0, -this.r);
+            pop();
+        }
     }
 
     // ETAPA 3 - LIMITES DO CENÁRIO
