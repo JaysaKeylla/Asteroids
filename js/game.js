@@ -17,6 +17,8 @@ var time = 60000;
 var multiplicador = 1;
 var hitasteroid;
 var enter;
+var explosion = [];
+
 
 
 function preload() {
@@ -30,10 +32,13 @@ function preload() {
     boost = loadSound("sprites/boost.mp3");
     hitasteroid = loadSound("sprites/hitasteroid.mp3");
     enter = loadSound("sprites/enter.mp3");
-
+    for (var i = 0; i < 2; i++) {
+        explosion[i] = loadImage("sprites/boom" + i + ".png");
+    }
 }
 
 function setup() {
+    frameRate(300);
     createCanvas(windowWidth - 10, windowHeight - 8);
     dstar = new Dstar();
     for (var i = 0; i < 5; i++) {
@@ -53,6 +58,7 @@ function newAsteroids() {
 }
 
 function draw() {
+    
     background(space);
     console.log('in loop', screen)
     if (screen == 0) { //Tela de start
@@ -115,7 +121,11 @@ function draw() {
                         enemies = enemies.concat(newEnemies);
                         score = score + 100; //contagem de score ETAPA 06 o asteroide comum vale 100 pontos
                     }
-
+                    console.log(enemies[j].pos.x)
+                    for (var k = 0; k < 2; k++) {
+                        image(explosion[k], enemies[j].pos.x, enemies[j].pos.y);
+                    }
+                    score = score + 100;
                     enemies.splice(j, 1);
                     lasers.splice(i, 1);
                     break;
@@ -188,8 +198,8 @@ function keyPressed() {
     } else if (!keyCode == UP_ARROW) {
         boost.stop();
     } else if (keyCode == ENTER) {
-        console.log(enemies.length);
-        if (enemies == [] ||enemies ==0 ) {
+        //console.log(enemies.length);
+        if (enemies == [] || enemies == 0) {
             for (var i = 0; i < 5; i++) {
                 enemies.push(new Enemy());
             }
@@ -199,5 +209,5 @@ function keyPressed() {
     } else if (keyCode == BACKSPACE) {
         enemies = [];
         screen = 0;
-    } 
+    }
 }

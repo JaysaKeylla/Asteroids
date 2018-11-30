@@ -4,6 +4,7 @@ function Enemy(pos, r) {
 		this.pos = pos.copy();
 	} else {
 		this.pos = createVector(random(width), random(height));
+		// console.log(this.pos )
 	}
 	if (r) {
 		this.r = r * 0.5;
@@ -28,6 +29,7 @@ function Enemy(pos, r) {
 		push();
 		stroke(255);
 		noFill();
+		// console.log(this.pos.x, this.pos.y);
 		translate (this.pos.x, this.pos.y);
 		//ellipse(0, 0, this.r * 2);
 		beginShape();
