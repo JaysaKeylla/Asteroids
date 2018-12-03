@@ -13,10 +13,14 @@ var levelsound;
 var boost;
 var level = 1;
 var screen = 0; //ETAPA 09: Mudança de telas
-var time = 60000;
+var time = 10000;
 var multiplicador = 1;
 var hitasteroid;
-var enter;
+var explosion = [];
+var restart;
+var star;
+
+
 
 
 function preload() {
@@ -30,13 +34,18 @@ function preload() {
     boost = loadSound("sprites/boost.mp3");
     hitasteroid = loadSound("sprites/hitasteroid.mp3");
     enter = loadSound("sprites/enter.mp3");
-
+    restart = loadSound("sprites/restart.mp3");
+    start = loadSound("sprites/start.mp3");
+    for (var i = 0; i < 6; i++) { //ETAPA 10 ANIMAÇÃO DA EXPLOSÃO
+        explosion[i] = loadImage("sprites/boom" + i + ".png");
+    }
 }
 
 function setup() {
+    frameRate(25);
     createCanvas(windowWidth - 10, windowHeight - 8);
     dstar = new Dstar();
-    for (var i = 0; i < 5; i++) {
+    for (var i = 0; i < 10; i++) {
         enemies.push(new Enemy());
     }
     setInterval(newAsteroids, time);
@@ -53,8 +62,8 @@ function newAsteroids() {
 }
 
 function draw() {
+    
     background(space);
-    console.log('in loop', screen)
     if (screen == 0) { //Tela de start
         textFont(font);
         textSize(250);
@@ -62,18 +71,20 @@ function draw() {
         text("START", (windowWidth - 10) / 5, (windowHeight - 8) / 2);
         textSize(20);
         fill(255);
-        text("A Frota Instelar tem uma missão para você e sua equipe, destrua os asteroids que ameassam a terra com a sua nave Dstar", (windowWidth - 10) / 12, (windowHeight - 8) / 1.5);
+        text("Você foi promovido a capitão!!! \n E a Frota Instelar tem uma missão para você e sua equipe, destrua os asteroids que ameassam a terra com a sua nova nave Dstar", (windowWidth - 10) / 12, (windowHeight - 8) / 1.5);
         textSize(20);
         fill(255);
         text("Press ENTER to start", (windowWidth - 10) / 12, (windowHeight - 8) / 1.25);
     }
 
     if (screen == 1) { //Tela do jogo
-        // enter.play();
-        //    dstar = new Dstar();
+        
         if (score > level * 2500) {
+            levelsound.play();
+            for (var i = 0; i < level; i++) {
             bonus.push(new Bonus());
-            // levelsound.play();
+        }
+            
 
             // ETAPA 08 ADIÇÃO DE ETAPAS, as etapas são infinitas, quando vcchega num multiplo de 2500 nos pontos vc passa de fase;
             level++;
@@ -82,7 +93,7 @@ function draw() {
 
         for (var i = 0; i < enemies.length; i++) {
             if (dstar.hits(enemies[i])) {
-                //    hitasteroid.play();
+                hitasteroid.play();
                 screen = 2;
 
 
@@ -95,8 +106,8 @@ function draw() {
 
         for (var k = 0; k < bonus.length; k++) { //ETAPA 07 quando se passa de fase aparecem asteroids especiais que valem mais pontos
             if (dstar.hits(bonus[k])) {
-                score = score + 2000; // se a nave bate no asteroide ganha 2000 pontos
-                bonus.push(new Bonus());
+                hitasteroid.play();
+                screen = 2;
             }
 
             bonus[k].render();
@@ -110,12 +121,15 @@ function draw() {
             for (var j = enemies.length - 1; j >= 0; j--) {
                 if (lasers[i].hits(enemies[j])) {
                     if (enemies[j].r > 20) {
-                        // boom.play(); //efeito sonoro quando o asteroide é destruído
+                        boom.play(); //efeito sonoro quando o asteroide é destruído
                         var newEnemies = enemies[j].breakup();
                         enemies = enemies.concat(newEnemies);
                         score = score + 100; //contagem de score ETAPA 06 o asteroide comum vale 100 pontos
                     }
-
+                    for (var k = 0; k < 6; k++) {
+                        image(explosion[k], (enemies[j].pos.x-250), (enemies[j].pos.y-200));
+                    }
+                    score = score + 100;
                     enemies.splice(j, 1);
                     lasers.splice(i, 1);
                     break;
@@ -131,7 +145,7 @@ function draw() {
             for (var k = bonus.length - 1; k >= 0; k--) {
                 if (lasers[t].hits(bonus[k])) {
 
-                    // hitbonus.play(); //efeito sonoro quando o asteroide bonus é destruído    
+                    hitbonus.play(); //efeito sonoro quando o asteroide bonus é destruído    
                     score = score + 1000; //o asteroide bonus vale 1000 pontos
 
 
@@ -161,6 +175,7 @@ function draw() {
     }
     if (screen == 2) { // Tela de game over
         background(gameover);
+        score=0;
     }
 }
 
@@ -169,6 +184,8 @@ function keyReleased() {
     dstar.boosting(false);
     if (!shot.isPlaying()) {
         shot.stop();
+    }if (!boom.isPlaying()) {
+        boom.stop();
     }
 }
 
@@ -188,9 +205,10 @@ function keyPressed() {
     } else if (!keyCode == UP_ARROW) {
         boost.stop();
     } else if (keyCode == ENTER) {
-        console.log(enemies.length);
-        if (enemies == [] ||enemies ==0 ) {
-            for (var i = 0; i < 5; i++) {
+        enter.stop();
+        start.play();
+        if (enemies == [] || enemies == 0) {
+            for (var i = 0; i < 10; i++) {
                 enemies.push(new Enemy());
             }
         }
@@ -198,6 +216,7 @@ function keyPressed() {
         screen = 1;
     } else if (keyCode == BACKSPACE) {
         enemies = [];
+        restart.play();
         screen = 0;
-    } 
+    }
 }
