@@ -33,7 +33,6 @@ function preload() {
     levelsound = loadSound("sprites/level.mp3");
     boost = loadSound("sprites/boost.mp3");
     hitasteroid = loadSound("sprites/hitasteroid.mp3");
-    enter = loadSound("sprites/enter.mp3");
     restart = loadSound("sprites/restart.mp3");
     start = loadSound("sprites/start.mp3");
     for (var i = 0; i < 6; i++) { //ETAPA 10 ANIMAÇÃO DA EXPLOSÃO
@@ -176,6 +175,7 @@ function draw() {
     if (screen == 2) { // Tela de game over
         background(gameover);
         score=0;
+        level=1;
     }
 }
 
@@ -192,31 +192,35 @@ function keyReleased() {
 // ETAPA 2 - MOVIMENTAÇÃO DO JOGADOR
 function keyPressed() {
     console.log(key);
-    if (key == " ") {
-        lasers.push(new Laser(dstar.pos, dstar.heading));
-        shot.play();
-    } else if (keyCode == RIGHT_ARROW) {
-        dstar.setRotation(0.1);
-    } else if (keyCode == LEFT_ARROW) {
-        dstar.setRotation(-0.1);
-    } else if (keyCode == UP_ARROW) {
-        dstar.boosting(true);
-        boost.play();
-    } else if (!keyCode == UP_ARROW) {
+    if(screen==1){
+        if (key == " ") {
+            lasers.push(new Laser(dstar.pos, dstar.heading));
+            shot.play();
+        } else if (keyCode == RIGHT_ARROW) {
+            dstar.setRotation(0.1);
+        } else if (keyCode == LEFT_ARROW) {
+            dstar.setRotation(-0.1);
+        } else if (keyCode == UP_ARROW) {
+            dstar.boosting(true);
+            boost.play();
+        } else if (!keyCode == UP_ARROW) {
         boost.stop();
-    } else if (keyCode == ENTER) {
-        enter.stop();
-        start.play();
-        if (enemies == [] || enemies == 0) {
-            for (var i = 0; i < 10; i++) {
-                enemies.push(new Enemy());
+        }
+    }if(screen==0){
+         if (keyCode == ENTER) {
+            start.play();
+                if (enemies == [] || enemies == 0) {
+                    for (var i = 0; i < 10; i++) {
+                         enemies.push(new Enemy());
             }
         }
-        console.log(screen)
         screen = 1;
-    } else if (keyCode == BACKSPACE) {
+    }
+} if(screen==2){
+    if (keyCode == BACKSPACE) {
         enemies = [];
         restart.play();
         screen = 0;
-    }
-}
+        }
+    } 
+}  
