@@ -71,7 +71,7 @@ function draw() {
         text("START", (windowWidth - 10) / 5, (windowHeight - 8) / 2);
         textSize(20);
         fill(255);
-        text("Você foi promovido a capitão!!! \n E a Frota Instelar tem uma missão para você e sua equipe, destrua os asteroids que ameassam a terra com a sua nova nave Dstar", (windowWidth - 10) / 12, (windowHeight - 8) / 1.5);
+        text("Você foi promovido a capitão!!! \n E a Frota Estelar tem uma missão para você e sua equipe, destrua os asteróides que ameaçam a Terra com a sua nova nave Dstar", (windowWidth - 10) / 12, (windowHeight - 8) / 1.5);
         textSize(20);
         fill(255);
         text("Press ENTER to start", (windowWidth - 10) / 12, (windowHeight - 8) / 1.25);
