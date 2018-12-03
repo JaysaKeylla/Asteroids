@@ -119,15 +119,16 @@ function draw() {
             lasers[i].update();
             for (var j = enemies.length - 1; j >= 0; j--) {
                 if (lasers[i].hits(enemies[j])) {
-                    if (enemies[j].r > 20) {
-                        boom.play(); //efeito sonoro quando o asteroide é destruído
+                    if (enemies[j].r > 30) {
                         var newEnemies = enemies[j].breakup();
                         enemies = enemies.concat(newEnemies);
                         score = score + 100; //contagem de score ETAPA 06 o asteroide comum vale 100 pontos
                     }
                     for (var k = 0; k < 6; k++) {
                         image(explosion[k], (enemies[j].pos.x-250), (enemies[j].pos.y-200));
+                       
                     }
+                    boom.play(); //efeito sonoro quando o asteroide é destruído
                     score = score + 100;
                     enemies.splice(j, 1);
                     lasers.splice(i, 1);
@@ -191,7 +192,6 @@ function keyReleased() {
 
 // ETAPA 2 - MOVIMENTAÇÃO DO JOGADOR
 function keyPressed() {
-    console.log(key);
     if(screen==1){
         if (key == " ") {
             lasers.push(new Laser(dstar.pos, dstar.heading));
