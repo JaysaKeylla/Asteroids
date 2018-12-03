@@ -219,6 +219,7 @@ function keyPressed() {
 } if(screen==2){
     if (keyCode == BACKSPACE) {
         enemies = [];
+        bonus = [];
         restart.play();
         screen = 0;
         }
