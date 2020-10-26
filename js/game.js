@@ -260,6 +260,8 @@ function keyPressed() {
         boost.stop();
         boom.stop();
         shot.stop();
+        hitbonus.stop();
+        levelsound.stop();
        
         }
     } 
